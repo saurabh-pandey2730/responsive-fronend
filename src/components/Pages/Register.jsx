@@ -4,21 +4,38 @@ import { Link , useNavigate } from 'react-router-dom';
 import { useState} from 'react'
 function Register() {
 
-
+  const [errorMessage , setErrorMessage]= useState(null)
+  
   const [formData , setFormData]= useState({})
 const navigate = useNavigate()
 const handlechange=(e)=>{
-  setFormData({...formData,[e.target.id]: e.target.value })
+  setFormData({...formData,[e.target.id]: e.target.value.trim() })
 }
 const  handleSubmit= async(e) =>{
   e.preventDefault()
-
-  const res= await fetch('/api/auth/signup',{
-    method :'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(formData)
-  })
-  .then(data=> console.log(data))
+  if (!formData.username || !formData.email || !formData.password) {
+    return setErrorMessage('Please fill out all fields.');
+    }
+   try {
+     
+     setErrorMessage(null)
+       const res= await fetch('/api/auth/signup',{
+         method :'POST',
+         headers:{'Content-Type':'application/json'},
+         body: JSON.stringify(formData)
+     })
+      const data = await res.json();
+    if (data.success === false) {
+      return setErrorMessage(data.message);
+    }
+    
+    if(res.ok) {
+      navigate('/login');
+    }
+  } catch (error) {
+    setErrorMessage(error.message);
+    
+    }
 
 }
   return (
