@@ -1,35 +1,24 @@
-import React from "react";
+import React from 'react'
+ import { BrowserRouter,Route,Routes} from 'react-router-dom'
 
-import Navbar from "./components/Navbar/Navbar";
-
-  import Slider  from './components/Header/Slider'
-import FooterComponent from "./components/Header/Footer";
-const App = () => {
+ import Footer from './components/Navbar/Footer'
+ import Home from './components/Navbar/Home'
+ import Navbar from './components/Navbar/Navbar'
+import Register from './components/Pages/Register'
+import Login from './components/Pages/Login'
+function App() {
   return (
-    <>
-    
-      
-    <section
-      className="h-screen bg-Hero bg-cover
-      font-[Poppins] md:bg-top bg-center"
-      >
-      <Navbar />
-      <div className="flex flex-col justify-center text-center items-center h-3/4">
-        <h2 className="text-white text-2xl font-medium ">Fashion Tips</h2>
-        <h1 className="md:text-5xl text-3xl text-white font-semibold py-5">
-          Items every customers should have
-        </h1>
-        <div className="text-xl">
-        <button className="bg-[#2c7fe4] text-white  px-6 py-2 rounded-full">
-      Getting Started
-    </button>
-        </div>
-      </div>
-    </section>
-    <Slider/>
-    <FooterComponent/>
-      </>
-  );
-};
+    <BrowserRouter>
+    <Navbar/>
+    <Routes>
+       
+        <Route path="/" element={<Home/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={<Login/>} />
+    </Routes>
+    <Footer/>
+    </BrowserRouter>
+  )
+}
 
-export default App;
+export default App
